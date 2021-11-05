@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Net.Mime;
 using Microsoft.AspNetCore.Builder;
@@ -43,7 +44,11 @@ namespace Redis.API
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Redis API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "Redis API",
+                    Version = $"v1 - {Environment.MachineName} - {Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")} - {DateTime.Now}"
+                });
             });
 
             services.AddRouting(opt => opt.LowercaseUrls = true);
@@ -62,11 +67,11 @@ namespace Redis.API
             {
                 app.UseDeveloperExceptionPage();
 
+                app.UseHttpsRedirection();
+
                 app.UseSwagger();
 
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "v1"));
-
-                app.UseHttpsRedirection();
             }
 
             app.UseRouting();
