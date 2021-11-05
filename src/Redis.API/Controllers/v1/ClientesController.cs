@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
@@ -40,9 +39,9 @@ namespace Redis.API.Controllers.v1
         [HttpGet]
         public IActionResult GetAllAsync()
         {
-            var keys = _clienteService.GetClientes();
+            var clientesIds = _clienteService.GetClientes();
 
-            return Ok(keys);
+            return Ok(clientesIds);
         }
 
         [ProducesResponseType(typeof(Cliente), statusCode: (int)HttpStatusCode.OK)]
