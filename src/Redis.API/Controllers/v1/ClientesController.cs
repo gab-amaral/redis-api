@@ -70,7 +70,11 @@ namespace Redis.API.Controllers.v1
             if (cliente == null)
                 return NotFound(id);
 
-            return Ok(await _clienteService.DeleteClienteAsync(id));
+            var deleted = await _clienteService.DeleteClienteAsync(id);
+            if (!deleted)
+                return UnprocessableEntity(id);
+
+            return Ok(cliente);
         }
     }
 }
