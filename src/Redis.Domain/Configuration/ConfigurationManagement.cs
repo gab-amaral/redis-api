@@ -1,6 +1,6 @@
 namespace Redis.Domain.Configuration
 {
-    public class ConfigurationManager
+    public class ConfigurationManagement
     {
         public RedisConfiguration RedisConfiguration { get; set; }
     }

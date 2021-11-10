@@ -15,7 +15,7 @@ namespace Redis.Domain.Services
         private readonly ConnectionMultiplexer _connection;
         private readonly RedisConfiguration _redisConfiguration;
 
-        public ClienteService(ConnectionMultiplexer connection, ConfigurationManager configuration)
+        public ClienteService(ConnectionMultiplexer connection, ConfigurationManagement configuration)
         {
             _connection = connection;
             _dataBase = connection.GetDatabase();

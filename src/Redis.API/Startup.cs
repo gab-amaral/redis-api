@@ -20,18 +20,18 @@ namespace Redis.API
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            ConfigurationManager = configuration.GetSection("ConfigurationManager").Get<ConfigurationManager>();
+            ConfigurationManagement = configuration.GetSection("ConfigurationManagement").Get<ConfigurationManagement>();
         }
 
         public IConfiguration Configuration { get; }
-        public ConfigurationManager ConfigurationManager { get; }
+        public ConfigurationManagement ConfigurationManagement { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton(_ => ConfigurationManager);
+            services.AddSingleton(_ => ConfigurationManagement);
 
-            services.AddSingleton(_ => StackExchange.Redis.ConnectionMultiplexer.Connect(ConfigurationManager.RedisConfiguration.ConnectionString));
+            services.AddSingleton(_ => StackExchange.Redis.ConnectionMultiplexer.Connect(ConfigurationManagement.RedisConfiguration.ConnectionString));
 
             services.Scan(action =>
             {
@@ -55,7 +55,7 @@ namespace Redis.API
             services.AddRouting(opt => opt.LowercaseUrls = true);
 
             services.AddHealthChecks()
-                    .AddRedis(ConfigurationManager.RedisConfiguration.ConnectionString,
+                    .AddRedis(ConfigurationManagement.RedisConfiguration.ConnectionString,
                               name: "Redis",
                               timeout: System.TimeSpan.FromSeconds(3),
                               tags: new[] { "ready" });
